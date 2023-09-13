@@ -1,13 +1,6 @@
-#include "main.h"
 #include <stdio.h>
 #include <string.h>
 
-/**
- * add_strings - Adds two strings representing numbers
- * @num1: The first number
- * @num2: The second number
- * @result: The result of the addition
- */
 void add_strings(char num1[], char num2[], char result[])
 {
 	int len1 = strlen(num1);
@@ -17,7 +10,8 @@ void add_strings(char num1[], char num2[], char result[])
 
 	int max_len = (len1 > len2) ? len1 : len2;
 
-	memset(result, 0, 5000);
+	memset(result, '0', 5000);
+	result[max_len + 1] = '\0';
 
 	for (i = len1 - 1, j = len2 - 1; 
 	     i >= 0 || j >= 0 || carry; 
@@ -30,12 +24,14 @@ void add_strings(char num1[], char num2[], char result[])
 		carry = tmp / 10;
 		result[max_len] = (tmp % 10) + '0';
 	}
+
+	int start_idx = 0;
+	while(result[start_idx] == '0' && result[start_idx + 1] != '\0')
+		start_idx++;
+
+	memmove(result, &result[start_idx], 5000 - start_idx);
 }
 
-/**
- * main - Program entry point
- * Return: 0 on success
- */
 int main(void)
 {
 	char a[5000] = "1";
